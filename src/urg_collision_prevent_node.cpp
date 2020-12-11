@@ -10,7 +10,7 @@ UrgSimpleListener::UrgSimpleListener() {
     lidar = n.subscribe<sensor_msgs::LaserScan>("scan", 10, &UrgSimpleListener::lidarMsgCallback, this);
 
     // Inicializacion de los publicadores
-    obstacle = n.advertise<std_msgs::Int32>("direction", 10);
+    obstacle = n.advertise<std_msgs::Int32>("obstacle", 10);
 
     // Inicializacion de las variables de estado
     this->msgObstacle.data = 0;
