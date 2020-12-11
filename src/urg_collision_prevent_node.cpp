@@ -6,6 +6,9 @@ UrgSimpleListener::UrgSimpleListener() {
     // Instancia para acceder a los parametros
     private_n = ros::NodeHandle("~");
 
+    // Set de los parametros
+    setMinDist();
+
     // Inicializacion de las subscripciones
     lidar = n.subscribe<sensor_msgs::LaserScan>("scan", 10, &UrgSimpleListener::lidarMsgCallback, this);
 
@@ -14,6 +17,18 @@ UrgSimpleListener::UrgSimpleListener() {
 
     // Inicializacion de las variables de estado
     this->msgObstacle.data = 0;
+}
+
+void UrgSimpleListener::setMinDist() {
+    if(private_n.param<float>("min_dist", MIN_DIST, DEFAULT_MIN_DIST)){
+        if(MIN_DIST <= 0.1) {
+            MIN_DIST = DEFAULT_MIN_DIST;
+            ROS_INFO("La distancia minima es invalida, se coloca el default: %.2f.", DEFAULT_MIN_DIST);
+        }
+        ROS_INFO("Distancia minima seteada [%.2f]", MIN_DIST);
+    } else {
+        ROS_INFO("Distancia minima por defecto [%.2f]", DEFAULT_MIN_DIST);
+    }
 }
 
 void UrgSimpleListener::lidarMsgCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {

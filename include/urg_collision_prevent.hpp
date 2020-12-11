@@ -2,8 +2,7 @@
 #include <std_msgs/Int32.h>
 #include <sensor_msgs/LaserScan.h>
 
-
-const float MIN_DIST = 0.3;
+const float DEFAULT_MIN_DIST = 0.3;
 
 class UrgSimpleListener {
     ros::NodeHandle n;
@@ -18,7 +17,11 @@ class UrgSimpleListener {
     // Mensajes
     std_msgs::Int32 msgObstacle;
 
+    //Estado
+    float MIN_DIST = 0.3;
+
     public:
     UrgSimpleListener();
+    void setMinDist();
     void lidarMsgCallback(const sensor_msgs::LaserScan::ConstPtr&);
 };
